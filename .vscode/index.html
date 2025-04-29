@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes App</title>
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .note-input {
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .btn-custom {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 500;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+        .note-list {
+            margin-top: 20px;
+        }
+        .note-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .note-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        .note-content {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .note-time {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .error {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        h1 {
+            color: #28a745;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Notes App</h1>
+        <div class="card">
+            <h3>Add a Note</h3>
+            <input type="text" id="noteInput" class="form-control note-input mb-3" placeholder="Enter your note">
+            <button onclick="createNote()" class="btn btn-success btn-custom w-100 mb-3">Add Note</button>
+            <button onclick="loadNotes()" class="btn btn-secondary btn-custom w-100">Refresh Notes</button>
+            <h3>Your Notes</h3>
+            <div id="notesList" class="note-list"></div>
+            <div id="errorMessage" class="error"></div>
+        </div>
+    </div>
+
+    <script>
+        // Use the pre-generated JWT token directly
+        const accessToken = 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkFTMWszaG5rUEF3OXlqbHEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3FpZGFoZXBmcXJpeHpldHl1end4LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIxZjBlZTlmMC1mNTIwLTRkYjMtOTg1Yy01MTI4YTAwMzcyOWMiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzQ1OTUzNzE4LCJpYXQiOjE3NDU5NTAxMTgsImVtYWlsIjoic3VmaXlhYWZyZWVuMTJAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbF92ZXJpZmllZCI6dHJ1ZX0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NDU5NTAxMTh9XSwic2Vzc2lvbl9pZCI6ImI3ZjBhMmFkLTE4MTctNGYwNS1hMDNiLWRkZjAyNGI3ZWFjZCIsImlzX2Fub255bW91cyI6ZmFsc2V9.tZsyx-fjy4Ru-ib_F6Ark1eyjbyTaIW9tALvtTs7uZU';
+
+        const errorMessage = document.getElementById('errorMessage');
+
+        async function createNote() {
+            const content = document.getElementById('noteInput').value.trim();
+            if (!content) {
+                errorMessage.textContent = 'Note content cannot be empty.';
+                return;
+            }
+
+            try {
+                const response = await fetch('https://qidahepfqrixzetyuzwx.supabase.co/functions/v1/post_notes', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content }),
+                });
+                if (!response.ok) throw new Error(await response.text());
+                errorMessage.textContent = '';
+                alert('Note created!');
+                document.getElementById('noteInput').value = '';
+                loadNotes();
+            } catch (error) {
+                errorMessage.textContent = 'Error creating note: ' + error.message;
+            }
+        }
+
+        async function loadNotes() {
+            try {
+                const response = await fetch('https://qidahepfqrixzetyuzwx.supabase.co/functions/v1/get_notes', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                    },
+                });
+                if (!response.ok) throw new Error(await response.text());
+                const notes = await response.json();
+                const notesList = document.getElementById('notesList');
+                notesList.innerHTML = notes.map(note => `
+                    <div class="note-item">
+                        <div class="note-content">${note.content}</div>
+                        <div class="note-time">(Created: ${new Date(note.created_at).toLocaleString()})</div>
+                    </div>
+                `).join('');
+                errorMessage.textContent = '';
+            } catch (error) {
+                errorMessage.textContent = 'Error loading notes: ' + error.message;
+            }
+        }
+
+        // Load notes on page load
+        loadNotes();
+    </script>
+</body>
+</html>
+
+
+
