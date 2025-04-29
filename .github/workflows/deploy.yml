@@ -1,0 +1,18 @@
+name: Deploy Edge Functions
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - functions/**
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: qidahepfqrixzetyuzwx
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+      - run: supabase functions deploy post_notes --project-ref $PROJECT_ID
+      - run: supabase functions deploy get_notes --project-ref $PROJECT_ID
