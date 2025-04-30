@@ -38,23 +38,24 @@ This project provides a serverless backend using Supabase (PostgreSQL + Edge Fun
     - Run: supabase db push
 
 5.5 Run the frontend:
-    - Open index.html using VS Code Live Server
+    - Open index.html using VS Code Live Server: http://127.0.0.1:5500
 
 5.6 Configure CORS in Supabase:
     - Go to Settings > API > CORS
-    - Add: Live Server
+    - Add: http://127.0.0.1:5500
 
 6. Project Structure
-   Path	Description
-functions/post_notes/index.js-	POST endpoint to create notes
-functions/get_notes/index.js-	GET endpoint to retrieve notes
-supabase/migrations/schema.sql-	Database schema for the notes table
-index.html-	Frontend built with Bootstrap 5
-README.md-	Project documentation
 
+| File/Folder                          | Purpose                                          |
+|-------------------------------------|--------------------------------------------------|
+| functions/post_notes/index.js       | Handles POST requests to create notes            |
+| functions/get_notes/index.js        | Handles GET requests to retrieve notes           |
+| supabase/migrations/schema.sql      | Defines the database schema for the notes table  |
+| index.html                          | Frontend interface using HTML, JS, Bootstrap 5   |
+| README.md                           | Project documentation                            |
 
-    
-8. Database Schema
+7. Database Schema
+
 Table: notes
 
 | Column     | Type      | Description                          |
