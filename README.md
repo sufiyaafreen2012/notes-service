@@ -38,11 +38,11 @@ This project provides a serverless backend using Supabase (PostgreSQL + Edge Fun
     - Run: supabase db push
 
 5.5 Run the frontend:
-    - Open index.html using VS Code Live Server: http://127.0.0.1:5500
+    - Open index.html using VS Code Live Server.
 
 5.6 Configure CORS in Supabase:
     - Go to Settings > API > CORS
-    - Add: http://127.0.0.1:5500
+   
 
 6. Project Structure
 
