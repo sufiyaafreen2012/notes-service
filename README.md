@@ -95,11 +95,6 @@ Table: notes
 
 - Test with curl:
 
-  POST a note:
-  curl -X POST http://localhost:54321/functions/v1/post_notes -H "Authorization: Bearer YOUR_JWT_TOKEN" -H "Content-Type: application/json" -d '{"content": "Sample note"}'
-
-  GET notes:
-  curl -X GET http://localhost:54321/functions/v1/get_notes -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 - Stop Supabase:
   supabase stop
