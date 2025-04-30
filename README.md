@@ -45,17 +45,12 @@ This project provides a serverless backend using Supabase (PostgreSQL + Edge Fun
     - Add: Live Server
 
 6. Project Structure
-   notes-service/
-├── functions/
-│   ├── post_notes/
-│   │   └── index.js           # POST endpoint to create notes
-│   └── get_notes/
-│       └── index.js           # GET endpoint to retrieve notes
-├── supabase/
-│   └── migrations/
-│       └── schema.sql         # Database schema for 'notes' table
-├── index.html                 # Frontend built with Bootstrap 5
-└── README.md                  # Project documentation
+   Path	Description
+functions/post_notes/index.js-	POST endpoint to create notes
+functions/get_notes/index.js-	GET endpoint to retrieve notes
+supabase/migrations/schema.sql-	Database schema for the notes table
+index.html-	Frontend built with Bootstrap 5
+README.md-	Project documentation
 
 
     
