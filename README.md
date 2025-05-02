@@ -118,3 +118,9 @@ Table: notes
 - Fixed "Invalid API Key" issue by refreshing Supabase keys.
 - Resolved "404 Not Found" by correctly routing to /auth/v1/token?grant_type=password.
 - Handled CORS errors by adding the local frontend origin to CORS settings.
+
+  
+ <p align="center">
+  <img src="https://github.com/sufiyaafreen2012/notes-service/blob/main/images/yo.jpg?raw=true" width="600" alt="Welcome screen">
+</p>
+
